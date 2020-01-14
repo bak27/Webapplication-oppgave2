@@ -1,0 +1,22 @@
+                                           AVGANG-LOGG
+
+
+
+Dato: 22.10.2019 16:56:26
+Avgang id = '1' med tidslengden: '7timer' og prisen '599' er prøvd å endres.(PRØVD Å ENDRE AVGANG)
+------------------------- 
+ 
+Dato: 22.10.2019 16:56:31
+Avgang id = '1' med tidslengden: '7timer' og prisen '599' er endret.(ENDRET AVGANG)
+------------------------- 
+ 
+Dato: 22.10.2019 16:56:34
+Avgang id = '1' med tidslengden: '7tim' og prisen '599' prøvd å slette å slette avgang.(PRØVD Å SLETTE AVGANG)
+------------------------- 
+ 
+Dato: 22.10.2019 16:56:36
+Avgang id = '1' med tidslengden: '7tim' og prisen '599' er slettet.(SLETTET AVGANG)
+------------------------- 
+ 
+
+ 

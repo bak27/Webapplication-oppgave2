@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "AdminSide";
+
+
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+
+</head>
+
+<body style="background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%); background-attachment: fixed;">
+        <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:black; font-size:18px">
+            <div class="container">
+                <div class="navbar-header">
+                    <button data-target="#navbar-collapse-02" data-toggle="collapse" class="navbar-toggle" type="button">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button><img src="~/Images/Logo.PNG" width="80" height="49" />
+
+                </div>
+                <div id="navbar-collapse-02" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav"></ul>
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li> @Html.ActionLink("Admin Logout", "LoggUt", "Loginn")</li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div>
+        </div>
+
+
+        <h3>Velg Strekning/avgang for å registrere, endre eller slette!</h3>
+        <ul class="nav nav-tabs" style="padding-top: 20px;">
+
+
+            @Html.ActionLink("Strekning", "HentAllestrekning", new { tom = "" }, new { @class = "btn ", style = "color: #fff; background-color: #1E88E5; width: 300px; " })
+            @Html.ActionLink("Avgang", "HentAlleAvgang", new { tom = "" }, new { @class = "btn ", style = "color: #fff; background-color: #673ab7; width: 300px; " })
+
+
+        </ul>
+
+        <div class="tab-content">
+            <div id="home" class="tab-pane fade">
+
+                <div id="menu1" class="tab-pane fade">
+
+                </div>
+                <div id="menu2" class="tab-pane fade">
+
+                </div>
+                <div id="menu3" class="tab-pane fade">
+
+                </div>
+
+            </div>
+        </div>
+</body>
+</html>

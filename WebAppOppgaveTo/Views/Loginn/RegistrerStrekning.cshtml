@@ -1,0 +1,80 @@
+﻿
+
+@model Model.Strekning
+
+@{
+
+
+    if (Session["LoggetInn"] == null)
+    {
+        Response.Redirect("~/Loginn/Index");
+    }
+
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    
+</head>
+<body style="background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%); background-attachment: fixed;">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:black; font-size:18px">
+        <div class="container">
+            <div class="navbar-header">
+                <button data-target="#navbar-collapse-02" data-toggle="collapse" class="navbar-toggle" type="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button><img src="~/Images/Logo.PNG" width="80" height="48" />
+
+            </div>
+            <div id="navbar-collapse-02" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav"></ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li> @Html.ActionLink("Tilbake til Strekning", "HentAlleStrekning", "Loginn")</li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div>
+    </div>
+
+
+
+    @using (Html.BeginForm())
+    {
+
+
+        <div class="form-horizontal">
+            <h4>Registrer ny strekning</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Fra, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Fra, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Fra, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Til, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Til, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Til, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Lagre" class="btn btn-success" />
+
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
+

@@ -1,0 +1,19 @@
+                                           Registrering-LOGG 
+
+
+Dato: 22.10.2019 17:04:43
+Avgang id = '0' med tidslengden: '787' og prisen '59' er registrert.(AVGANG REGISTRERT)
+------------------------- 
+ 
+Dato: 22.10.2019 17:05:03
+Avgang id = '0' med tidslengden: '7tim' og prisen '2' er registrert.(AVGANG REGISTRERT)
+------------------------- 
+ 
+Dato: 22.10.2019 17:16:51
+En ny strekning  er registrert.(REGISTRERT STREKNING)
+------------------------- 
+ 
+Dato: 25/10/2019 17:14:23
+En ny strekning fra gdshdg til sdbvds er registrert. (REGISTRERT STREKNING)
+------------------------- 
+ 

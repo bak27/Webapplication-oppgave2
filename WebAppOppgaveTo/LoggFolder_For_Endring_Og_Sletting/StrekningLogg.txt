@@ -1,0 +1,36 @@
+                                           STREKNING-LOGG
+
+
+Dato: 22.10.2019 17:01:56
+Strekning id = 1 fra 'Oslo' til 'Bergen' har blitt prøvd å endres.(PRØVD Å ENDRE).
+------------------------- 
+ 
+Dato: 22.10.2019 17:01:58
+Strekning id = 1 fra 'Oslo' til 'Bergen' er endret.(ENDRET).
+------------------------- 
+ 
+Dato: 22.10.2019 17:01:59
+Strekning id = 1 fra 'Oslo' til 'Bergen' prøvd å slette.(PRØVD Å SLETTE).
+------------------------- 
+ 
+
+ 
+Dato: 25/10/2019 17:14:27
+Strekning id = 6 fra 'gdshdg' til 'sdbvds' har blitt prøvd å endres.(PRØVD Å ENDRE).
+------------------------- 
+ 
+Dato: 25/10/2019 17:14:32
+Strekning id = 6 fra 'gdshdg' til 'sdbv' er endret.(ENDRET).
+------------------------- 
+ 
+Dato: 25/10/2019 17:14:36
+Strekning id = 6 fra 'gdshdg' til 'sdbv' prøvd å slette.(PRØVD Å SLETTE).
+------------------------- 
+ 
+Dato: 25/10/2019 17:14:38
+Strekning id = 6 fra 'gdshdg' til 'sdbv' er slettet.(SLETTET).
+------------------------- 
+Dato: 1/14/2020 11:18:14
+Strekning id = 1 fra 'Oslo' til 'Bergen' har blitt prøvd å endres.(PRØVD Å ENDRE).
+------------------------- 
+ 

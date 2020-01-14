@@ -1,0 +1,5 @@
+C:\Projects\MODEL\bin\Debug\MODEL.dll
+C:\Projects\MODEL\bin\Debug\MODEL.pdb
+C:\Projects\MODEL\obj\Debug\MODEL.csprojAssemblyReference.cache
+C:\Projects\MODEL\obj\Debug\MODEL.dll
+C:\Projects\MODEL\obj\Debug\MODEL.pdb

@@ -1,0 +1,473 @@
+﻿
+
+@{
+    ViewBag.Title = "Hjemside";
+}
+<html>
+<head>
+    <link href="~/Content/Index.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function hideElem() {
+            document.getElementById("returDato").style.visibility = "hidden";
+        }
+
+        function showElem() {
+            document.getElementById("returDato").style.visibility = "visible";
+        }
+        $(function () {
+
+            var date = new Date();
+            var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+            $('#utreisedato').datepicker({
+                minDate: today
+            });
+
+            $('#returdato').datepicker({
+                minDate: today
+            });
+
+            $.ajax({
+                url: '/TogBestilling/GetStasjon',
+                type: 'GET',
+                dataType: 'json',
+                success: function (fraDestinasjon) {
+                    VisFraDestinasjon(fraDestinasjon);
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+
+            $.ajax({
+                url: '/TogBestilling/GetStasjon',
+                type: 'GET',
+                dataType: 'json',
+                success: function (tilDestinasjon) {
+                    VisTilDestinasjon(tilDestinasjon);
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+
+
+            $("#utreisedato").on("change", function () {
+
+                $('#turAvg').show();
+                var fra = $('#fra option:selected').text();
+                var til = $('#til option:selected').text();
+
+                $.ajax({
+                    url: '/TogBestilling/FinnTurAvganger/?fra=' + fra + '&til=' + til,
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+
+                    success: function (Avgang) {
+                        SetAvganger(Avgang);
+
+                    },
+                    error: function (x, y, z) {
+                        alert(x + '\n' + y + '\n' + z);
+                    }
+                });
+
+            });
+
+            $("#returdato").on("change", function () {
+
+                $('#retAvg').show();
+                var fra = $('#fra option:selected').text();
+                var til = $('#til option:selected').text();
+
+                $.ajax({
+                    url: '/TogBestilling/FinnReturAvganger/?til=' + til + '&fra=' + fra,
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+
+                    success: function (ReturAvgang) {
+                        SetReturAvganger(ReturAvgang);
+                    },
+                    error: function (x, y, z) {
+                        alert(x + '\n' + y + '\n' + z);
+                    }
+                });
+            });
+
+
+            function VisFraDestinasjon(fraDestinasjon) {
+                var utStreng = "";
+                for (var i in fraDestinasjon) {
+                    utStreng += '<option value=" ' + fraDestinasjon[i].Stasjon + '">' + fraDestinasjon[i].Stasjon + '</option>';
+                }
+                $("#fra").append(utStreng);
+            }
+
+            function VisTilDestinasjon(tilDestinasjon) {
+                var utStreng = "";
+                for (var i in tilDestinasjon) {
+                    utStreng += '<option value=" ' + tilDestinasjon[i].Stasjon + '">' + tilDestinasjon[i].Stasjon + '</option>';
+                }
+                $("#til").append(utStreng);
+            }
+
+            function SetAvganger(Avgang) {
+                var utStreng = "";
+                for (var i in Avgang) {
+                    var price = Avgang[i].Price;
+                    var TotallPrice = FinnePrice(price);
+                    utStreng += '<option value=" ' + Avgang[i].AId + '">' + Avgang[i].FraogTiltid + ' ' + Avgang[i].Lengdne + ' ' + TotallPrice + 'kr' + '</option>';
+
+                }
+                $("#turAvg").append(utStreng);
+            }
+
+            function SetReturAvganger(ReturAvgang) {
+                var utStreng = "";
+                for (var i in ReturAvgang) {
+                    var price = ReturAvgang[i].Price;
+                    var TotallPrice = FinnePrice(price);
+
+                    utStreng += '<option value=" ' + ReturAvgang[i].AId + '">' + ReturAvgang[i].FraogTiltid + ' ' + ReturAvgang[i].Lengdne + ' ' + TotallPrice + 'kr' + '</option>';
+
+                }
+                $("#retAvg").append(utStreng);
+            }
+
+            function FinnePrice(price) {
+                var total = 0;
+                var Voksen = $('#Voksen option:selected').val();
+                var Barn = $('#Barn option:selected').val();
+                var Student = $('#Student option:selected').val();
+                var Honnør = $('#Honnør option:selected').val();
+
+                if (Voksen != 0) {
+                    total += (Voksen * price);
+                }
+                if (Barn != 0) {
+                    total += (Barn * price * 0.5);
+                }
+                if (Student != 0) {
+                    total += (Student * price * 0.4);
+                }
+                if (Honnør != 0) {
+                    total += (Honnør * price * 0.5);
+                }
+                return total;
+            }
+
+
+            $("#bestilling").click(function () {
+                var utStreng = "";
+                var f = $('#fra option:selected').val();
+                var t = $('#til option:selected').val();
+                var V = $("#Voksen").val();
+                var B = $("#Barn").val();
+                var S = $("#Student").val();
+                var H = $("#Honnør").val();
+
+                var ut = $("#utreisedato").val();
+                var ret = $("#returdato").val();
+
+                var avgPrice = $('#turAvg option:selected').text();
+                var retAvgPrice = $('#retAvg option:selected').text();
+
+                if ((f == t)) {
+                    utStreng += " Destinasjon må være forskjellig!";
+                    $("#sammeValg").append(utStreng);
+                }
+                else if ((f == 0)) {
+                    utStreng += "Velg hvor du skal reise fra!";
+                    $("#sammeValg").append(utStreng);
+                }
+
+                else if ((t == 0)) {
+                    utStreng += "Velg hvor du skal reise til!";
+                    $("#sammeValg").append(utStreng);
+                }
+                else if ((V == 0) && (B == 0) && (S == 0) && (H == 0)) {
+                    utStreng += "Du må velge antall passasjerer!";
+                    $("#tomFelt").append(utStreng);
+                }
+                else if (ut == 0) {
+                    utStreng += "Fyll ut feltet";
+                    $("#tomUtreise").append(utStreng);
+                }
+
+                else if ((ut == 0) && (ret == 0)) {
+                    utStreng += "Fyll ut feltet";
+                    $("#tomUtreise").append(utStreng);
+                }
+
+
+                else if ((avgPrice == null) || (retAvgPrice == null)) {
+                    utStreng += "Velg avgang og prisen";
+                    $("#avgPris").append(utStreng);
+                }
+                else {
+                    var jsInn = {
+                        Fra: $('#fra option:selected').val(),
+                        Til: $('#til option:selected').val(),
+                        Utreisedato: $("#utreisedato").val(),
+                        Returdato: $("#returdato").val(),
+                        Voksen: $("#Voksen").val(),
+                        Barn: $("#Barn").val(),
+                        Student: $("#Student").val(),
+                        AvgangogPrice: $('#turAvg option:selected').text(),
+                        ReturAvgangogPrice: $('#retAvg option:selected').text(),
+                        Honnør: $("#Honnør").val()
+                    }
+
+                    $.ajax({
+                        url: '/TogBestilling/Bestilling',
+                        type: 'POST',
+                        data: JSON.stringify(jsInn),
+                        contentType: "application/json;charset=utf-8",
+                        success: function (ok) {
+                            window.location.href = '/TogBestilling/Bestill';
+                        },
+                        error: function (x, y, z) {
+                            alert(x + '\n' + y + '\n' + z);
+                        }
+
+                    });
+
+                }
+            })
+
+        })
+    </script>
+
+</head>
+<body>
+     <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:black; font-size:18px">
+        <div class="container">
+            <div class="navbar-header">
+                <button data-target="#navbar-collapse-02" data-toggle="collapse" class="navbar-toggle" type="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button><img src="~/Images/Logo.PNG" width="80" height="48" />
+
+            </div>
+            <div id="navbar-collapse-02" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav"></ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li> @Html.ActionLink("Admin LoggInn", "LoggUt", "Loginn")</li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div>
+    </div>
+
+
+    <div id="booking" class="section">
+        <div class="section-center">
+            <div class="container">
+                <div class="row">
+                    <div class="booking-form">
+                        <div class="form-header">
+                            <h1>Bestill Togbillett</h1>
+                        </div>
+                        <form action="/TogBestilling/Betaling" class="col-lg-6" method="post" id="form">
+                            <div class="wb">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <div id="dropDown">
+                                                <select class="form-control" id="fra" name="fra">
+
+                                                    <option value="0">Fra</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <div id="dropDown1">
+                                                <select class="form-control" id="til" name="til">
+
+                                                    <option value="0">Til</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div id="sammeValg" style="color:red"></div>
+
+                                <div class="row">
+                                    <div class="form-reisende">
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" for="for voksen">Voksen</label>
+                                                <select class="form-control" id="Voksen" name="voksen">
+                                                    <option selected value=0>0</option>
+                                                    <option value=1>1</option>
+                                                    <option value=2>2</option>
+                                                    <option value=3>3</option>
+                                                    <option value=4>4</option>
+                                                    <option value=5>5</option>
+                                                    <option value=6>7</option>
+                                                    <option value=7>7</option>
+                                                    <option value=8>8</option>
+                                                    <option value=9>9</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" for="for barn">Barn</label>
+                                                <select class="form-control" id="Barn" name="Barn">
+                                                    <option selected value=0>0</option>
+                                                    <option value=1>1</option>
+                                                    <option value=2>2</option>
+                                                    <option value=3>3</option>
+                                                    <option value=4>4</option>
+                                                    <option value=5>5</option>
+                                                    <option value=6>7</option>
+                                                    <option value=7>7</option>
+                                                    <option value=8>8</option>
+                                                    <option value=9>9</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" for="for Student">Student</label>
+                                                <select class="form-control" id="Student" name="Student">
+                                                    <option selected value=0>0</option>
+                                                    <option value=1>1</option>
+                                                    <option value=2>2</option>
+                                                    <option value=3>3</option>
+                                                    <option value=4>4</option>
+                                                    <option value=5>5</option>
+                                                    <option value=6>7</option>
+                                                    <option value=7>7</option>
+                                                    <option value=8>8</option>
+                                                    <option value=9>9</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" for="for Honnør">Honnør</label>
+                                                <select class="form-control" id="Honnør" name="Honnør">
+                                                    <option selected value=0>0</option>
+                                                    <option value=1>1</option>
+                                                    <option value=2>2</option>
+                                                    <option value=3>3</option>
+                                                    <option value=4>4</option>
+                                                    <option value=5>5</option>
+                                                    <option value=6>7</option>
+                                                    <option value=7>7</option>
+                                                    <option value=8>8</option>
+                                                    <option value=9>9</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div id="tomFelt" style="color:red"></div>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <div>
+
+                                                <label>
+                                                    <input name="type" type="radio" checked="checked" onchange="hideElem()" />En Vei
+                                                </label>
+                                                <label>
+                                                    <input name="type" type="radio" onchange="showElem()" id="turRetur" />Tur/Retur
+                                                </label>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+
+                                            <label name="Dato">Utreise</label>
+                                            <input type="text" class="form-control" placeholder=" Velg Dato" id="utreisedato" name="Turdato" />
+
+                                            <select id="turAvg" name="turAvg" style="width: 202px;display:none;">
+                                            </select>
+                                        </div>
+                                        <div id="tomUtreise" style="color:red"></div>
+                                    </div>
+
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <div id="returDato" class="invisible">
+                                                <label name="Dato">Retur</label>
+                                                <input type="text" class="form-control" placeholder=" Velg Dato" id="returdato" name="Returdato" />
+
+                                                <div id="visReturAvgang">
+                                                    <select id="retAvg" name="retAvg" style="width: 202px;display:none; height:28px; background-color: #ffffff;border-radius: 3px;font-weight: 400;">
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div id="returErr" style="color:red"></div>
+                                        </div>
+                                    </div>
+                                    <div id="avgPris" style="color:red"></div>
+
+
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="form-btn">
+                                    <input type="button" name="index" id="bestilling" value="TogBestilling" class="btn btn-info" />
+                                    <input class="btn btn-info " type="reset"><i class="fa fa-refresh"></i>
+                                </div>
+                            </div>
+
+
+
+                        </form>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
+
+

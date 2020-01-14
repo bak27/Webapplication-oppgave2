@@ -1,0 +1,13 @@
+C:\Projects\BLL\obj\Debug\BLL.csprojAssemblyReference.cache
+C:\Projects\BLL\bin\Debug\BLL.dll
+C:\Projects\BLL\bin\Debug\BLL.pdb
+C:\Projects\BLL\bin\Debug\DAL.dll
+C:\Projects\BLL\bin\Debug\MODEL.dll
+C:\Projects\BLL\bin\Debug\EntityFramework.dll
+C:\Projects\BLL\bin\Debug\DAL.pdb
+C:\Projects\BLL\bin\Debug\DAL.dll.config
+C:\Projects\BLL\bin\Debug\MODEL.pdb
+C:\Projects\BLL\bin\Debug\EntityFramework.xml
+C:\Projects\BLL\obj\Debug\BLL.csproj.CopyComplete
+C:\Projects\BLL\obj\Debug\BLL.dll
+C:\Projects\BLL\obj\Debug\BLL.pdb

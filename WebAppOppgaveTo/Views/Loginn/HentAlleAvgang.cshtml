@@ -1,0 +1,101 @@
+﻿
+@model List<Model.Avgang>
+@{
+
+
+    if (Session["LoggetInn"] == null)
+    {
+        Response.Redirect("~/Loginn/Index");
+    }
+
+}
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+</head>
+<body style="background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%); background-attachment: fixed;">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:black; font-size:18px">
+        <div class="container">
+            <div class="navbar-header">
+                <button data-target="#navbar-collapse-02" data-toggle="collapse" class="navbar-toggle" type="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button><img src="~/Images/Logo.PNG" width="80" height="48" />
+
+            </div>
+            <div id="navbar-collapse-02" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav"></ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li> @Html.ActionLink("Tilbake til AdminSide", "AdminSide", "Loginn")</li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div>
+    </div>
+    <br /><br />
+    @Html.ActionLink("Registrer ny Avgang", "RegistrerAvgang", new { tom = "" }, new { @class = "btn btn-success" })
+
+
+    <br /><br />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model[0].AId)
+
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model[0].FraogTiltid)
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Lengdne)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].StrekningId)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AId)
+                </td>
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.FraogTiltid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lengdne)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StrekningId)
+                </td>
+                <td>
+                    @Html.ActionLink("Endre", "EndreAvgang", new { id = item.AId }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Slette", "slettAvgang", new { id = item.AId }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</body>
+</html>
